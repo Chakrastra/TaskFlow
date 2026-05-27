@@ -1,0 +1,31 @@
+{% extends 'tasks/base.html' %}
+{% block content %}
+<div class="flex-between" style="margin-bottom: 2rem;">
+    <h2>Your Tasks</h2>
+    <a href="{% url 'task_create' %}" class="btn">✨ New Task</a>
+</div>
+
+{% if tasks %}
+    {% for task in tasks %}
+    <div class="card task-card" onclick="window.location.href='{% url 'task_detail' task.pk %}'">
+        <div class="flex-between">
+            <div class="gap-4">
+                {% if task.completed %}
+                <div class="badge">Completed</div>
+                {% else %}
+                <div class="badge badge-pending">Pending</div>
+                {% endif %}
+                <h3 style="margin:0; font-size: 1.25rem;">{{ task.title }}</h3>
+            </div>
+            <span class="text-muted" style="font-size:0.9rem;">{{ task.created_at|date:"M d, Y" }}</span>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card" style="text-align: center; padding: 4rem 2rem;">
+        <h3 class="text-muted">No tasks yet.</h3>
+        <p>Start being productive by adding a new task!</p>
+        <a href="{% url 'task_create' %}" class="btn" style="margin-top: 1rem;">Create First Task</a>
+    </div>
+{% endif %}
+{% endblock %}

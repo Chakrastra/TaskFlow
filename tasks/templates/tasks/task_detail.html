@@ -1,0 +1,35 @@
+{% extends 'tasks/base.html' %}
+{% block content %}
+<div class="card">
+    <div class="flex-between" style="margin-bottom: 2rem;">
+        <div class="gap-4">
+            {% if task.completed %}
+            <div class="badge">Completed</div>
+            {% else %}
+            <div class="badge badge-pending">Pending</div>
+            {% endif %}
+            <h2 style="margin: 0;">{{ task.title }}</h2>
+        </div>
+        <div class="gap-4">
+            <a href="{% url 'task_update' task.pk %}" class="btn btn-secondary">Edit</a>
+            <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+    
+    <div style="background: rgba(15,23,42,0.4); padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 2rem;">
+        {% if task.description %}
+            <p style="white-space: pre-wrap; margin: 0; line-height: 1.6;">{{ task.description }}</p>
+        {% else %}
+            <p class="text-muted" style="font-style: italic; margin: 0;">No description provided.</p>
+        {% endif %}
+    </div>
+    
+    <div class="text-muted" style="font-size: 0.9rem;">
+        <p>Created on {{ task.created_at|date:"F j, Y, g:i a" }}</p>
+    </div>
+    
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <a href="{% url 'task_list' %}" class="btn btn-secondary">&larr; Back to Tasks</a>
+    </div>
+</div>
+{% endblock %}
